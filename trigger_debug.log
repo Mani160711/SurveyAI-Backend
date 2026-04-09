@@ -1,0 +1,32 @@
+PATCH called. Previous: False, New: True, Audience List Output: None
+PATCH called. Previous: False, New: True, Audience List Output: None
+CREATE called. Received audience from frontend: ['9177716779', '9000821576']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+CREATE called. Received audience from frontend: ['9177716779', '9000821576']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+PATCH called. Previous: True, New: False, Audience List Output: ['9177716779', '9000821576']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+PATCH called. Previous: True, New: False, Audience List Output: ['9177716779', '9000821576']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+CREATE called. Received audience from frontend: ['9177716779', '9000821576', '6305843714']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576', '6305843714']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+PATCH called. Previous: True, New: False, Audience List Output: ['9177716779', '9000821576', '6305843714']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576', '6305843714']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+PATCH called. Previous: True, New: False, Audience List Output: ['9177716779', '9000821576', '6305843714']
+PATCH called. Previous: False, New: True, Audience List Output: ['9177716779', '9000821576', '6305843714']
+Executing bot with D:\Survey_Project\repo\surveyAI-backend\venv\Scripts\python.exe
+PATCH called. Previous: False, New: True, Audience File Name: 1_f418826e_num.xlsx
+Executing bot against extracted path list (3 nums)
+PATCH called. Previous: False, New: True, Audience File Name: 2_a07294e0_num.xlsx
+Executing bot against extracted path list (3 nums)
+PATCH called. Previous: False, New: True, Audience File Name: 3_285046ed_num.xlsx
+Executing bot against extracted path list (3 nums)
+PATCH called. Previous: True, New: False, Audience File Name: 3_285046ed_num.xlsx
+PATCH called. Previous: False, New: True, Audience File Name: 3_285046ed_num.xlsx
+Executing bot against extracted path list (3 nums)
