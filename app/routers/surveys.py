@@ -4,6 +4,8 @@ from sqlalchemy import func
 from typing import List
 import pandas as pd
 from io import BytesIO
+import os
+import secrets
 from app.core.database import get_db
 from app.core.deps import get_current_user
 from app.models.user import User
@@ -22,12 +24,12 @@ def _assert_survey_owner(survey: Survey, user: User):
 
 @router.post("", response_model=SurveyOut, status_code=201)
 def create_survey(payload: SurveyCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
-    import secrets
+    # Removed redundant local imports
     
     file_content = None
     file_name = None
     if payload.audience_file_path:
-        import os
+        # Removed redundant local import
         if os.path.exists(payload.audience_file_path):
             with open(payload.audience_file_path, "rb") as bf:
                 file_content = bf.read()
