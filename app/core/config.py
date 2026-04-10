@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     OPENAI_API_KEY: str = ""
 
     # CORS
-    FRONTEND_URL: str = "http://localhost:3000"
+    FRONTEND_URL: str = "https://survey-ai-frontend-kappa.vercel.app"
 
     class Config:
         env_file = ".env"

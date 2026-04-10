@@ -25,10 +25,9 @@ app.add_middleware(
         "https://survey-ai-frontend-kappa.vercel.app",
         "https://survey-ai-superadmin.vercel.app",
         "http://localhost:3000", 
-        "http://localhost:3001", 
-        "http://127.0.0.1:3001", 
-        "http://127.0.0.1:3000"
+        "http://localhost:3001",
     ],
+    allow_origin_regex="https://survey-ai-frontend-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
