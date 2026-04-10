@@ -2,7 +2,7 @@ import psycopg2
 import uuid
 
 # Change '123456789' if your postgres password is different from the .env
-DATABASE_URL = "postgresql://postgres:123456789@localhost:5432/surveyai"
+DATABASE_URL = "postgresql://neondb_owner:npg_uhEk0TFQw9ni@ep-broad-term-amvjp0g2-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
 try:
     print("Connecting to database...")

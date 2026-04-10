@@ -111,49 +111,8 @@ def update_survey(survey_id: int, payload: SurveyUpdate, db: Session = Depends(g
     with open("trigger_debug.log", "a") as f:
         f.write(f"PATCH called. Previous: {was_published}, New: {survey.is_published}, Audience File Name: {survey.audience_file_name}\n")
 
-    if not was_published and survey.is_published and survey.audience_file_content:
-        import subprocess
-        import sys
-        import os
-        import pandas as pd
-        from io import BytesIO
-        
-        survey_url = f"http://localhost:3000/s/{survey.public_token}"
-        
-        try:
-            filename = (survey.audience_file_name or "").lower()
-            file_stream = BytesIO(survey.audience_file_content)
-            
-            if filename.endswith(".csv"):
-                df = pd.read_csv(file_stream)
-            else:
-                df = pd.read_excel(file_stream)
-            
-            if "phone_number" in df.columns:
-                extracted_numbers = df["phone_number"].dropna().astype(str).str.strip()
-                extracted_numbers = extracted_numbers[extracted_numbers != ""]
-                unique_extracted = extracted_numbers.drop_duplicates().tolist()
-                numbers_str = ",".join(unique_extracted)
-                python_exe = os.path.join(sys.prefix, "Scripts", "python.exe") if os.name == "nt" else os.path.join(sys.prefix, "bin", "python")
-                
-                try:
-                    with open("trigger_debug.log", "a") as f:
-                        f.write(f"Executing bot against extracted path list ({len(unique_extracted)} nums)\n")
-                    print(f"Spawning automation bot for {len(unique_extracted)} numbers from file...")
-                    subprocess.Popen([
-                        python_exe, 
-                        "whatsapp_bot.py", 
-                        "--url", survey_url, 
-                        "--numbers", numbers_str
-                    ])
-                except Exception as e:
-                    with open("trigger_debug.log", "a") as f:
-                        f.write(f"Exception triggering bot: {e}\n")
-                    print(f"Failed to dispatch automation bot: {e}")
-        except Exception as file_e:
-            with open("trigger_debug.log", "a") as f:
-                f.write(f"Exception parsing binary file block: {file_e}\n")
-            print(f"Failed to parse binary file block: {file_e}")
+    # Trigger logic for automated audience notification could go here (e.g. via SMS API)
+    # The previous WhatsApp bot logic was removed as it is incompatible with cloud deployment.
 
     survey = db.query(Survey).options(selectinload(Survey.questions)).filter(Survey.id == survey.id).first()
     response_count = db.query(func.count(Response.id)).filter(Response.survey_id == survey.id).scalar()
@@ -257,7 +216,9 @@ async def extract_phones(file: UploadFile = File(...), current_user: User = Depe
         if filename.endswith(".csv"):
             df = pd.read_csv(BytesIO(contents))
         elif filename.endswith((".xlsx", ".xls")):
-            df = pd.read_excel(BytesIO(contents))
+            # Explicitly use openpyxl engine for .xlsx files to avoid engine detection issues in some environments
+            engine = "openpyxl" if filename.endswith(".xlsx") else None
+            df = pd.read_excel(BytesIO(contents), engine=engine)
         else:
             raise HTTPException(status_code=400, detail="Invalid file format. Only CSV and Excel files are supported.")
             

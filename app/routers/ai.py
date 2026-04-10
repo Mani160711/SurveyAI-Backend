@@ -47,14 +47,12 @@ def get_insights(survey_id: int, db: Session = Depends(get_db), current_user: Us
     return insights
 
 
-@router.get("/surveys/{survey_id}/insights/latest", response_model=AIInsightOut)
+@router.get("/surveys/{survey_id}/insights/latest", response_model=Optional[AIInsightOut])
 def get_latest_insight(survey_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     survey = db.query(Survey).filter(Survey.id == survey_id, Survey.tenant_id == current_user.tenant_id).first()
     if not survey:
         raise HTTPException(status_code=404, detail="Survey not found")
     insight = db.query(AIInsight).filter(AIInsight.survey_id == survey_id).order_by(AIInsight.generated_at.desc()).first()
-    if not insight:
-        raise HTTPException(status_code=404, detail="No insights generated yet")
     return insight
 
 

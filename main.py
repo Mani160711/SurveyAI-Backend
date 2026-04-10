@@ -22,6 +22,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         settings.FRONTEND_URL, 
+        "https://survey-ai-frontend-kappa.vercel.app",
         "https://survey-ai-superadmin.vercel.app",
         "http://localhost:3000", 
         "http://localhost:3001", 

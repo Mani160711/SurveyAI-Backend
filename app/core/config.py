@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
 
     # Database
-    DATABASE_URL: str = "postgresql://postgres:password@localhost:5432/surveyai"
+    DATABASE_URL: str = "postgresql://neondb_owner:npg_uhEk0TFQw9ni@ep-broad-term-amvjp0g2-pooler.c-5.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
     # JWT
     SECRET_KEY: str = "change-this-secret-key-in-production"
