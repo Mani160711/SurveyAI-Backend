@@ -108,8 +108,8 @@ def update_survey(survey_id: int, payload: SurveyUpdate, db: Session = Depends(g
     db.commit()
     db.refresh(survey)
 
-    with open("trigger_debug.log", "a") as f:
-        f.write(f"PATCH called. Previous: {was_published}, New: {survey.is_published}, Audience File Name: {survey.audience_file_name}\n")
+    # Logging to cloud-compatible standard output instead of local files
+    print(f"PATCH called. Previous: {was_published}, New: {survey.is_published}, Audience File Name: {survey.audience_file_name}")
 
     # Trigger logic for automated audience notification could go here (e.g. via SMS API)
     # The previous WhatsApp bot logic was removed as it is incompatible with cloud deployment.
@@ -206,11 +206,10 @@ async def extract_phones(file: UploadFile = File(...), current_user: User = Depe
     contents = await file.read()
     filename = file.filename.lower()
     
-    import os
-    import secrets
-    os.makedirs("uploads", exist_ok=True)
-    safe_filename = f"{current_user.id}_{secrets.token_hex(4)}_{file.filename}"
-    file_path = os.path.join("uploads", safe_filename).replace("\\", "/")
+    import tempfile
+    unique_id = secrets.token_hex(4)
+    safe_filename = f"{current_user.id}_{unique_id}_{file.filename}"
+    file_path = os.path.join(tempfile.gettempdir(), safe_filename).replace("\\", "/")
     
     try:
         if filename.endswith(".csv"):
