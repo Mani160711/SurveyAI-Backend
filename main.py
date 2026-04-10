@@ -18,6 +18,7 @@ app = FastAPI(
 def startup_db_check():
     Base.metadata.create_all(bind=engine)
 
+# --- Robust CORS Configuration (Optimized for Vercel/Production) ---
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -27,11 +28,23 @@ app.add_middleware(
         "http://localhost:3000", 
         "http://localhost:3001",
     ],
+    # allow_origin_regex supports all Vercel subdomains (previews)
     allow_origin_regex="https://survey-ai-frontend-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=600, # Cache preflight for 10 minutes
 )
+
+@app.get("/api/v1/health-cors")
+def health_cors():
+    """Diagnostics route to verify CORS headers are reachable."""
+    return {
+        "status": "ok",
+        "allowed_frontend": settings.FRONTEND_URL,
+        "is_production": "vercel.app" in settings.FRONTEND_URL
+    }
 
 API = settings.API_V1_STR  # /api/v1
 
