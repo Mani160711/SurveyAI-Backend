@@ -16,7 +16,13 @@ app = FastAPI(
 # Create all tables on startup (Safe for Serverless)
 @app.on_event("startup")
 def startup_db_check():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("Database connected and tables verified.")
+    except Exception as e:
+        print(f"Database connection failed on startup: {e}")
+        # We don't raise here so the app can still start and serve a health check or CORS headers
+
 
 # --- Robust CORS Configuration (Optimized for Vercel/Production) ---
 app.add_middleware(
@@ -29,7 +35,7 @@ app.add_middleware(
         "http://localhost:3001",
     ],
     # allow_origin_regex supports all Vercel subdomains (previews)
-    allow_origin_regex="https://survey-ai-frontend-.*\.vercel\.app",
+    allow_origin_regex=r"https://survey-ai-frontend-.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
